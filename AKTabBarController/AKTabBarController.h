@@ -24,6 +24,13 @@
 #import "AKTabBar.h"
 #import "AKTab.h"
 
+typedef enum {
+    AKShowHideFromLeft,
+    AKShowHideFromRight
+} AKShowHideFrom;
+
+
+
 @interface AKTabBarController : UIViewController <AKTabBarDelegate, UINavigationControllerDelegate>
 
 // View Controllers handled by the tab bar controller.
@@ -99,8 +106,9 @@
 - (id)initWithTabBarHeight:(NSUInteger)height;
 
 // Hide / Show Methods
-- (void)showTabBarAnimated:(BOOL)animated;
-- (void)hideTabBarAnimated:(BOOL)animated;
+- (void)showTabBar:(AKShowHideFrom)showHideFrom animated:(BOOL)animated;
+- (void)hideTabBar:(AKShowHideFrom)showHideFrom animated:(BOOL)animated;
+
 
 // Refresh the Tab Bar
 - (void)loadTabs;

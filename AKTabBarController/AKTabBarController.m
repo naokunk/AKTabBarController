@@ -35,14 +35,7 @@ static const float kPushAnimationDuration = 0.35;
     BOOL visible;
 }
 
-typedef enum {
-    AKShowHideFromLeft,
-    AKShowHideFromRight
-} AKShowHideFrom;
-
 - (void)loadTabs;
-- (void)showTabBar:(AKShowHideFrom)showHideFrom animated:(BOOL)animated;
-- (void)hideTabBar:(AKShowHideFrom)showHideFrom animated:(BOOL)animated;
 
 @end
 
@@ -61,7 +54,7 @@ typedef enum {
 #pragma mark - Initialization
 
 - (id)init
-{    
+{
     return [self initWithTabBarHeight:kDefaultTabBarHeight];
 }
 
@@ -127,7 +120,7 @@ typedef enum {
         [tab setSelectedTextColor:[self selectedTextColor]];
         [tab setTabTitleFont:[self textFont]];
         [tab setTabTitle:[vc tabTitle]];
-
+        
         [tab setTabBarHeight:tabBarHeight];
         
         if (_minimumHeightToDisplayTitle)
@@ -274,7 +267,7 @@ typedef enum {
             [self addChildViewController:vc];
         }
     }
-
+    
     // When setting the view controllers, the first vc is the selected one;
     if ([viewControllers count] > 0) [self setSelectedViewController:viewControllers[0]];
     
