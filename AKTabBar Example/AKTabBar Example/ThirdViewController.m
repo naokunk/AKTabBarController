@@ -8,6 +8,8 @@
 
 #import "ThirdViewController.h"
 
+#import "AKTabBarController.h"
+
 @implementation ThirdViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -17,6 +19,13 @@
         self.title = @"Map";
     }
     return self;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self.akTabBarController setBadgeValue:@"1"
+                            forItemAtIndex:2];
 }
 
 - (NSString *)tabImageName

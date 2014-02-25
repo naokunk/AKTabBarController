@@ -23,6 +23,8 @@
 #import "AKTabBarController.h"
 #import "UIViewController+AKTabBarController.h"
 
+#import <JSCustomBadge/JSCustomBadge.h>
+
 // Default height of the tab bar
 static const int kDefaultTabBarHeight = 50;
 
@@ -56,7 +58,7 @@ typedef enum {
     
     // Tab Bar height
     NSUInteger tabBarHeight;
-
+    
     // Tab Bar position
     AKTabBarPosition tabBarPosition;
 }
@@ -64,32 +66,32 @@ typedef enum {
 #pragma mark - Initialization
 
 - (id)init
-{    
+{
     return [self initWithTabBarHeight:kDefaultTabBarHeight];
 }
 
 - (id)initWithTabBarHeight:(NSUInteger)height
 {
-  self = [super init];
-  if (!self) return nil;
-  
-  tabBarHeight = height;
-  
-  // default settings
-  _iconShadowOffset = CGSizeMake(0, -1);
-  
-  _tabWidth = 0.0f;
-  
-  return self;
+    self = [super init];
+    if (!self) return nil;
+    
+    tabBarHeight = height;
+    
+    // default settings
+    _iconShadowOffset = CGSizeMake(0, -1);
+    
+    _tabWidth = 0.0f;
+    
+    return self;
 }
 
 - (id)initWithTabBarHeight:(NSUInteger)height position:(AKTabBarPosition)position
 {
     self = [self initWithTabBarHeight:height];
     if (!self) return nil;
-
+    
     tabBarPosition = position;
-
+    
     return self;
 }
 
@@ -121,23 +123,30 @@ typedef enum {
 - (void)loadTabs
 {
     NSMutableArray *tabs = [[NSMutableArray alloc] init];
-
+    
     [[tabBarView tabBar] setTabColors:[self tabCGColors]];
     [[tabBarView tabBar] setEdgeColor:[self tabEdgeColor]];
     [[tabBarView tabBar] setTopEdgeColor:[self topEdgeColor]];
-
+    
     for (UIViewController *vc in self.viewControllers) {
         AKTab *tab = [[AKTab alloc] init];
         [tab setTabImageWithName:[vc tabImageName]];
         [tab setActiveImageWithName:[vc activeTabImageName]];
         
         if([vc tabBackgroundImageName]) {
-            [tab setBackgroundImageName:[vc tabBackgroundImageName]];
+            [tab setBackgroundImage:[UIImage imageNamed:[vc tabBackgroundImageName]]];
+        } else if([self backgroundImageName]) {
+            [tab setBackgroundImage:[UIImage imageNamed:[self backgroundImageName]]];
         } else {
-            [tab setBackgroundImageName:[self backgroundImageName]];
+            [tab setBackgroundImage:[self backgroundImage]];
         }
         
-        [tab setSelectedBackgroundImageName:[self selectedBackgroundImageName]];
+        if([self selectedBackgroundImageName]) {
+            [tab setSelectedBackgroundImage:[UIImage imageNamed:[self selectedBackgroundImageName]]];
+        } else {
+            [tab setSelectedBackgroundImage:[self selectedBackgroundImage]];
+        }
+        
         [tab setBackgroundImageCapInsets:[self backgroundImageCapInsets]];
         [tab setTabIconColors:[self iconCGColors]];
         [tab setTabIconShadowColor:[self iconShadowColor]];
@@ -291,6 +300,10 @@ typedef enum {
     }];
 }
 
+- (AKTabBar*)tabBar {
+    return tabBar;
+}
+
 #pragma mark - Setters
 
 - (void)setViewControllers:(NSMutableArray *)viewControllers
@@ -303,7 +316,7 @@ typedef enum {
             [self addChildViewController:vc];
         }
     }
-
+    
     // When setting the view controllers, the first vc is the selected one;
     if ([viewControllers count] > 0) [self setSelectedViewController:viewControllers[0]];
     
@@ -353,6 +366,52 @@ typedef enum {
 
 - (void)hideTabBarAnimated:(BOOL)animated {
     [self hideTabBar:AKShowHideFromRight animated:animated];
+}
+
+#pragma mark - Badge Value Methods
+
+- (void)setBadgeValue:(NSString *)badgeValue
+       forItemAtIndex:(NSInteger)index {
+    AKTab *tab = tabBar.tabs[index];
+    JSCustomBadge *badge = (JSCustomBadge*) [tab viewWithTag:129];
+    
+    if(!badgeValue || !badgeValue.length) {
+        [badge removeFromSuperview];
+        return;
+    }
+    
+    BOOL animateChange = NO;
+    if(badge) {
+        [badge autoBadgeSizeWithString:badgeValue];
+    } else {
+        if(!self.defaultBadge) {
+            badge = [JSCustomBadge customBadgeWithString:badgeValue];
+        } else {
+            badge = self.defaultBadge;
+            [badge autoBadgeSizeWithString:badgeValue];
+        }
+        animateChange = YES;
+    }
+    
+    int badgeWidth = badge.frame.size.width;
+    int badgeHeight = badge.frame.size.height;
+    
+    CGRect tabFrame = tab.frame;
+    
+    badge.frame = CGRectMake(tabFrame.size.width / 2 + 5, -5,
+                             badgeWidth, badgeHeight);
+    badge.tag = 129;
+    
+    [tab addSubview:badge];
+    if(animateChange) {
+        badge.alpha = 0.0;
+        badge.transform = CGAffineTransformMakeScale(0.2, 0.2);
+        [UIView animateWithDuration:0.2
+                         animations:^{
+                             badge.alpha = 1.0f;
+                             badge.transform = CGAffineTransformIdentity;
+                         }];
+    }
 }
 
 #pragma mark - Required Protocol Method

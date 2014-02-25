@@ -83,12 +83,11 @@ static const float kTopMargin = 2.0;
 - (void)drawBackground:(CGContextRef)ctx
                 inRect:(CGRect)rect {
     if (!self.selected) {
-        if (_backgroundImageName) {
-            UIImage *backgroundImage = [UIImage imageNamed:_backgroundImageName];
+        if (_backgroundImage) {
             if(!UIEdgeInsetsEqualToEdgeInsets(self.backgroundImageCapInsets, UIEdgeInsetsZero)) {
-                [[backgroundImage resizableImageWithCapInsets:self.backgroundImageCapInsets] drawInRect:rect];
+                [[_backgroundImage resizableImageWithCapInsets:self.backgroundImageCapInsets] drawInRect:rect];
             } else {
-                [[UIColor colorWithPatternImage:backgroundImage] set];
+                [[UIColor colorWithPatternImage:_backgroundImage] set];
                 CGContextFillRect(ctx, rect);
             }
         }
@@ -97,12 +96,11 @@ static const float kTopMargin = 2.0;
             CGContextFillRect(ctx, rect);
         }
     } else {
-        if (_selectedBackgroundImageName) {
-            UIImage *backgroundImage = [UIImage imageNamed:_selectedBackgroundImageName];
+        if (_selectedBackgroundImage) {
             if(!UIEdgeInsetsEqualToEdgeInsets(self.backgroundImageCapInsets, UIEdgeInsetsZero)) {
-                [[backgroundImage resizableImageWithCapInsets:self.backgroundImageCapInsets] drawInRect:rect];
+                [[_selectedBackgroundImage resizableImageWithCapInsets:self.backgroundImageCapInsets] drawInRect:rect];
             } else {
-                [[UIColor colorWithPatternImage:backgroundImage] set];
+                [[UIColor colorWithPatternImage:_selectedBackgroundImage] set];
                 CGContextFillRect(ctx, rect);
             }
         }
@@ -293,16 +291,15 @@ static const float kTopMargin = 2.0;
         
         // We fill the background with a noise pattern
         if (_isFillBackgroundNoisePattern) {
-          CGContextSaveGState(ctx);
-          {
-            if (_selectedBackgroundImageName) {
-              UIImage *backgroundImage = [UIImage imageNamed:_selectedBackgroundImageName];
-              if(!UIEdgeInsetsEqualToEdgeInsets(self.backgroundImageCapInsets, UIEdgeInsetsZero)) {
-                [[backgroundImage resizableImageWithCapInsets:self.backgroundImageCapInsets] drawInRect:rect];
-              } else {
-                [[UIColor colorWithPatternImage:backgroundImage] set];
-                CGContextFillRect(ctx, rect);
-              }
+        CGContextSaveGState(ctx);
+        {
+            if (_selectedBackgroundImage) {
+                if(!UIEdgeInsetsEqualToEdgeInsets(self.backgroundImageCapInsets, UIEdgeInsetsZero)) {
+                    [[_selectedBackgroundImage resizableImageWithCapInsets:self.backgroundImageCapInsets] drawInRect:rect];
+                } else {
+                    [[UIColor colorWithPatternImage:_selectedBackgroundImage] set];
+                    CGContextFillRect(ctx, rect);
+                }
             }
             else {
               [[UIColor colorWithPatternImage:[UIImage imageNamed:@"AKTabBarController.bundle/noise-pattern"]] set];

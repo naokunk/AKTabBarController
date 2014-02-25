@@ -131,12 +131,14 @@ static int kTopEdgeWidth   = 1;
         topEdgeColor = _edgeColor ?: [UIColor colorWithRed:.1f green:.1f blue:.1f alpha:.8f];
     }
 
-    CGContextSaveGState(ctx);
-    {
-        CGContextSetFillColorWithColor(ctx, topEdgeColor.CGColor);
-        CGContextFillRect(ctx, CGRectMake(0, 0, rect.size.width, kTopEdgeWidth));
+    if(topEdgeColor != [UIColor clearColor]) {
+        CGContextSaveGState(ctx);
+        {
+            CGContextSetFillColorWithColor(ctx, topEdgeColor.CGColor);
+            CGContextFillRect(ctx, CGRectMake(0, 0, rect.size.width, kTopEdgeWidth));
+        }
+        CGContextRestoreGState(ctx);
     }
-    CGContextRestoreGState(ctx);
     
     // Drawing the top bright emboss
     if(topEdgeColor != [UIColor clearColor]) {
@@ -150,12 +152,13 @@ static int kTopEdgeWidth   = 1;
     }
     
     // Drawing the edge border lines
-    CGContextSetFillColorWithColor(ctx, _edgeColor ? [_edgeColor CGColor] : [[UIColor colorWithRed:.1f green:.1f blue:.1f alpha:.8f] CGColor]);
+    if(_edgeColor != [UIColor clearColor]) {
+        CGContextSetFillColorWithColor(ctx, _edgeColor ? [_edgeColor CGColor] : [[UIColor colorWithRed:.1f green:.1f blue:.1f alpha:.8f] CGColor]);
+    }
     for (AKTab *tab in _tabs) {
         CGRect tabRect = CGRectMake(tab.frame.origin.x - kInterTabMargin, kTopEdgeWidth, kInterTabMargin, rect.size.height);
         CGContextFillRect(ctx, tabRect);
     }
-  
 }
 
 - (void)layoutSubviews
@@ -177,6 +180,9 @@ static int kTopEdgeWidth   = 1;
         
         //Calucate the starting x value, to center the buttons
         rect.origin.x = (screenWidth - ([self tabWidth]*tabNumber))/2.0f;
+        
+        // TODO: use a alignment property!
+        rect.origin.x = 0;
 	}
     else {
         // Calculating the tabs width.

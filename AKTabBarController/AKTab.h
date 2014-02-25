@@ -31,10 +31,10 @@
 @property (nonatomic, strong) NSString *activeImageWithName;
 
 // Tab background image
-@property (nonatomic, strong) NSString *backgroundImageName;
+@property (nonatomic, strong) UIImage *backgroundImage;
 
 // Tab selected background image
-@property (nonatomic, strong) NSString *selectedBackgroundImageName;
+@property (nonatomic, strong) UIImage *selectedBackgroundImage;
 
 // Tab background image insets
 @property (nonatomic) UIEdgeInsets backgroundImageCapInsets;

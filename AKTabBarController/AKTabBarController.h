@@ -24,6 +24,8 @@
 #import "AKTabBar.h"
 #import "AKTab.h"
 
+@class JSCustomBadge;
+
 @interface AKTabBarController : UIViewController <AKTabBarDelegate, UINavigationControllerDelegate>
 
 // View Controllers handled by the tab bar controller.
@@ -80,11 +82,17 @@
 // Tab bar top embos Color. optional, default to tabEdgeColor
 @property (nonatomic, strong) UIColor *topEdgeColor;
 
-// Tab background image
+// Tab background image name. This will override the backgroundImage property, if set.
 @property (nonatomic, strong) NSString *backgroundImageName;
 
-// Tab selected background image
+// Tab background image
+@property (nonatomic, strong) UIImage *backgroundImage;
+
+// Tab selected background image name. This will override the selectedBackgroundImage property, if set.
 @property (nonatomic, strong) NSString *selectedBackgroundImageName;
+
+// Tab selected background image
+@property (nonatomic, strong) UIImage *selectedBackgroundImage;
 
 // Tab background image insets
 @property (nonatomic) UIEdgeInsets backgroundImageCapInsets;
@@ -110,6 +118,9 @@
 // Is Drawing the gradient
 @property (nonatomic, assign) BOOL isGradient;
 
+// A default custom badge object.
+@property (nonatomic, strong) JSCustomBadge *defaultBadge;
+
 // Initialization with a specific height.
 - (id)initWithTabBarHeight:(NSUInteger)height;
 
@@ -120,7 +131,13 @@
 - (void)showTabBarAnimated:(BOOL)animated;
 - (void)hideTabBarAnimated:(BOOL)animated;
 
+- (void)setBadgeValue:(NSString*)badgeValue
+       forItemAtIndex:(NSInteger)index;
+
 // Refresh the Tab Bar
 - (void)loadTabs;
+
+// TabBar property for customization
+@property (nonatomic, readonly) AKTabBar *tabBar;
 
 @end
