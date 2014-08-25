@@ -145,23 +145,23 @@ static const float kTopMargin = 2.0;
     if (!displayTabTitle)
         labelRect = CGRectZero;
     
-    if (isTabIconPresent)
-    {
-        CGRect imageContainer = content;
-        imageContainer.size.height = CGRectGetHeight(content) - ((displayTabTitle) ? (kMargin + CGRectGetHeight(labelRect)) : 0);
-        
-        // When the image is not square we have to make sure it will not go beyond the bonds of the container
-        if (CGRectGetWidth(imageRect) >= CGRectGetHeight(imageRect)) {
-            imageRect.size.width = MIN(CGRectGetHeight(imageRect), MIN(CGRectGetWidth(imageContainer), CGRectGetHeight(imageContainer)));
-            imageRect.size.height = floorf(CGRectGetWidth(imageRect) / ratio);
-        } else {
-            imageRect.size.height = MIN(CGRectGetHeight(imageRect), MIN(CGRectGetWidth(imageContainer), CGRectGetHeight(imageContainer)));
-            imageRect.size.width = floorf(CGRectGetHeight(imageRect) * ratio);
-        }
-        
-        imageRect.origin.x = floorf(CGRectGetMidX(content) - CGRectGetWidth(imageRect) / 2);
-        imageRect.origin.y = floorf(CGRectGetMidY(imageContainer) - CGRectGetHeight(imageRect) / 2);
-    }
+//    if (isTabIconPresent)
+//    {
+//        CGRect imageContainer = content;
+//        imageContainer.size.height = CGRectGetHeight(content) - ((displayTabTitle) ? (kMargin + CGRectGetHeight(labelRect)) : 0);
+//        
+//        // When the image is not square we have to make sure it will not go beyond the bonds of the container
+//        if (CGRectGetWidth(imageRect) >= CGRectGetHeight(imageRect)) {
+//            imageRect.size.width = MIN(CGRectGetHeight(imageRect), MIN(CGRectGetWidth(imageContainer), CGRectGetHeight(imageContainer)));
+//            imageRect.size.height = floorf(CGRectGetWidth(imageRect) / ratio);
+//        } else {
+//            imageRect.size.height = MIN(CGRectGetHeight(imageRect), MIN(CGRectGetWidth(imageContainer), CGRectGetHeight(imageContainer)));
+//            imageRect.size.width = floorf(CGRectGetHeight(imageRect) * ratio);
+//        }
+//        
+//        imageRect.origin.x = floorf(CGRectGetMidX(content) - CGRectGetWidth(imageRect) / 2);
+//        imageRect.origin.y = floorf(CGRectGetMidY(imageContainer) - CGRectGetHeight(imageRect) / 2);
+//    }
     
     CGFloat offsetY = rect.size.height - ((displayTabTitle) ? (kMargin + CGRectGetHeight(labelRect)) : 0) + kTopMargin;
     
