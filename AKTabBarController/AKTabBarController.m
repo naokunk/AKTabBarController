@@ -70,6 +70,15 @@ typedef enum {
     return [self initWithTabBarHeight:kDefaultTabBarHeight];
 }
 
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    // default settings
+    tabBarHeight = 50;
+    _iconShadowOffset = CGSizeMake(0, -1);
+    _tabWidth = 0.0f;
+}
+
 - (id)initWithTabBarHeight:(NSUInteger)height
 {
     self = [super init];
