@@ -8,8 +8,6 @@
 
 #import "FourthViewController.h"
 
-#import "AKTabBarController.h"
-
 @implementation FourthViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -19,13 +17,6 @@
         self.title = @"Link";
     }
     return self;
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    [self.akTabBarController setBadgeValue:@""
-                            forItemAtIndex:2];
 }
 
 - (NSString *)tabImageName

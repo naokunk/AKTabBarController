@@ -11,5 +11,4 @@ Pod::Spec.new do |s|
   s.resources = "AKTabBarController/AKTabBarController.bundle"
   s.requires_arc = true
   s.framework = 'QuartzCore'
-  s.dependency 'JSCustomBadge', '~> 1.0'
 end

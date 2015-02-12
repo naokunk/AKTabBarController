@@ -14,8 +14,6 @@
 #import "ThirdViewController.h"
 #import "FourthViewController.h"
 
-#import <JSCustomBadge/JSCustomBadge.h>
-
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -121,16 +119,6 @@
     [_tabBarController setIsGradient:NO];
     [_tabBarController setIsFillBackgroundNoisePattern:NO];
      */
-    
-    // For customization of the default badge
-    _tabBarController.defaultBadge = [JSCustomBadge customBadgeWithString:@""
-                                                          withStringColor:[UIColor whiteColor]
-                                                           withInsetColor:[UIColor redColor]
-                                                           withBadgeFrame:YES
-                                                      withBadgeFrameColor:[UIColor whiteColor]
-                                                                withScale:1.0f
-                                                              withShining:NO];
-
     [_window setRootViewController:_tabBarController];
     [_window makeKeyAndVisible];
     return YES;
