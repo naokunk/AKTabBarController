@@ -24,11 +24,13 @@
 
 @interface UINavigationController (AKTabBarController)
 
-- (NSString *)tabImageName;
-
-- (NSString *)activeTabImageName;
-
 - (NSString *)tabBackgroundImageName;
+
+- (UIImage *)tabImage;
+
+- (UIImage *)activeTabImage;
+
+- (UIColor *)tabBackgroundColor;
 
 - (NSString *)tabTitle;
 

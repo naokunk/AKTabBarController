@@ -25,13 +25,16 @@
 @interface AKTab : UIButton
 
 // Image used to draw the icon.
-@property (nonatomic, strong) NSString *tabImageWithName;
+@property (nonatomic, strong) UIImage *tabImage;
 
 // Image used to draw the icon when the tab is active
-@property (nonatomic, strong) NSString *activeImageWithName;
+@property (nonatomic, strong) UIImage *activeTabImage;
 
 // Tab background image
 @property (nonatomic, strong) NSString *backgroundImageName;
+
+// Tab background Color
+@property (nonatomic, strong) UIColor *backgroundColor;
 
 // Tab selected background image
 @property (nonatomic, strong) NSString *selectedBackgroundImageName;

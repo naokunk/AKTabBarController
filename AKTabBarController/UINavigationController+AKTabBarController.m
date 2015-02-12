@@ -26,19 +26,25 @@
 
 @implementation UINavigationController (AKTabBarController)
 
-- (NSString *)tabImageName
-{
-	return [(self.viewControllers)[0] tabImageName];
-}
-
-- (NSString *)activeTabImageName
-{
-  return [(self.viewControllers)[0] activeTabImageName];
-}
 
 - (NSString *)tabBackgroundImageName
 {
     return [(self.viewControllers)[0] tabBackgroundImageName];
+}
+
+- (UIImage *)tabImage;
+{
+    return [(self.viewControllers)[0] tabImage];
+}
+
+- (UIImage *)activeTabImage
+{
+    return [(self.viewControllers)[0] activeTabImage];
+}
+
+- (UIColor *)tabBackgroundColor
+{
+    return [(self.viewControllers)[0] tabBackgroundColor];
 }
 
 - (NSString *)tabTitle

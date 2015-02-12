@@ -27,7 +27,7 @@
 static const int kDefaultTabBarHeight = 50;
 
 // Default Push animation duration
-static const float kPushAnimationDuration = 0.35;
+static const float kPushAnimationDuration = 0.3;
 
 @interface AKTabBarController ()
 {
@@ -66,15 +66,6 @@ typedef enum {
 - (id)init
 {    
     return [self initWithTabBarHeight:kDefaultTabBarHeight];
-}
-
-- (void)awakeFromNib
-{
-    [super awakeFromNib];
-    // default settings
-    tabBarHeight = 50;
-    _iconShadowOffset = CGSizeMake(0, -1);
-    _tabWidth = 0.0f;
 }
 
 - (id)initWithTabBarHeight:(NSUInteger)height
@@ -137,13 +128,14 @@ typedef enum {
 
     for (UIViewController *vc in self.viewControllers) {
         AKTab *tab = [[AKTab alloc] init];
-        [tab setTabImageWithName:[vc tabImageName]];
-        [tab setActiveImageWithName:[vc activeTabImageName]];
-        
+
+        [tab setTabImage:vc.tabImage];
+        [tab setActiveTabImage:vc.activeTabImage];
+
         if([vc tabBackgroundImageName]) {
-            [tab setBackgroundImageName:[vc tabBackgroundImageName]];
+            [tab setBackgroundImageName:vc.tabBackgroundImageName];
         } else {
-            [tab setBackgroundImageName:[self backgroundImageName]];
+            [tab setBackgroundColor:vc.tabBackgroundColor];
         }
         
         [tab setSelectedBackgroundImageName:[self selectedBackgroundImageName]];
@@ -208,7 +200,9 @@ typedef enum {
 
 #pragma - UINavigationControllerDelegate
 
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+- (void)navigationController:(UINavigationController *)navigationController
+      willShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated
 {
     if (!prevViewControllers)
         prevViewControllers = [navigationController viewControllers];

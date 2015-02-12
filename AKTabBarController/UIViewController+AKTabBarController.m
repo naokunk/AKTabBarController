@@ -26,16 +26,6 @@
 
 @implementation UIViewController (AKTabBarController)
 
-- (NSString *)tabImageName
-{
-	return nil;
-}
-
-- (NSString *)activeTabImageName
-{
-  return nil;
-}
-
 - (NSString *)tabBackgroundImageName
 {
     return nil;
@@ -44,6 +34,22 @@
 - (NSString *)tabTitle
 {
 	return nil;
+}
+
+- (UIImage *)tabImage
+{
+    return nil;
+}
+
+- (UIColor *)tabBackgroundColor
+{
+    return nil;
+}
+
+
+- (UIImage *)activeTabImage
+{
+    return nil;
 }
 
 - (AKTabBarController *)akTabBarController

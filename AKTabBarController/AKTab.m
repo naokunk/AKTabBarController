@@ -91,6 +91,9 @@ static const float kTopMargin = 2.0;
                 [[UIColor colorWithPatternImage:backgroundImage] set];
                 CGContextFillRect(ctx, rect);
             }
+        }else if (_backgroundColor) {
+            [_backgroundColor set];
+            CGContextFillRect(ctx, rect);
         }
         else {
             [[UIColor colorWithPatternImage:[UIImage imageNamed:@"AKTabBarController.bundle/noise-pattern"]] set];
@@ -105,6 +108,9 @@ static const float kTopMargin = 2.0;
                 [[UIColor colorWithPatternImage:backgroundImage] set];
                 CGContextFillRect(ctx, rect);
             }
+        }else if (_backgroundColor) {
+            [_backgroundColor set];
+            CGContextFillRect(ctx, rect);
         }
         else {
             [[UIColor colorWithPatternImage:[UIImage imageNamed:@"AKTabBarController.bundle/noise-pattern"]] set];
@@ -118,7 +124,7 @@ static const float kTopMargin = 2.0;
     // If the height of the container is too short, we do not display the title
     CGFloat offset = 1.0;
     
-    if (_tabImageWithName) isTabIconPresent = YES;
+    if (_tabImage) isTabIconPresent = YES;
     
     if (!_minimumHeightToDisplayTitle)
         _minimumHeightToDisplayTitle = _tabBarHeight - offset;
@@ -145,16 +151,16 @@ static const float kTopMargin = 2.0;
          */
         if (self.selected) {
             // Tab's image
-            image = [UIImage imageNamed:_activeImageWithName];
+            image = _activeTabImage;
             
             // Fallback to the regular image
             if(!image) {
-                image = [UIImage imageNamed:_tabImageWithName];
+                image = _tabImage;
             }
         }
         else {
             // Tab's image
-            image = [UIImage imageNamed:_tabImageWithName];
+            image = _tabImage;
         }
         
         // Getting the ratio for eventual scaling
@@ -338,14 +344,14 @@ static const float kTopMargin = 2.0;
         }
       
         // We draw the vertical lines for the border
-        CGContextSaveGState(ctx);
-        {
-            CGContextSetBlendMode(ctx, kCGBlendModeOverlay);
-            CGContextSetFillColorWithColor(ctx, _strokeColor ? [_strokeColor CGColor] : [[UIColor colorWithRed:.7f green:.7f blue:.7f alpha:.4f] CGColor]);
-            CGContextFillRect(ctx, CGRectMake(0, 2, 1, rect.size.height - 2));
-            CGContextFillRect(ctx, CGRectMake(rect.size.width - 1, 2, 1, rect.size.height - 2));
-        }
-        CGContextRestoreGState(ctx);
+//        CGContextSaveGState(ctx);
+//        {
+//            CGContextSetBlendMode(ctx, kCGBlendModeOverlay);
+//            CGContextSetFillColorWithColor(ctx, _strokeColor ? [_strokeColor CGColor] : [[UIColor colorWithRed:.7f green:.7f blue:.7f alpha:.4f] CGColor]);
+//            CGContextFillRect(ctx, CGRectMake(0, 2, 1, rect.size.height - 2));
+//            CGContextFillRect(ctx, CGRectMake(rect.size.width - 1, 2, 1, rect.size.height - 2));
+//        }
+//        CGContextRestoreGState(ctx);
         
         if (isTabIconPresent)
         {
